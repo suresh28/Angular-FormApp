@@ -1,0 +1,107 @@
+
+<div class="container">
+<h3> Employee Form</h3>
+
+<form #form="ngForm" (submit)="fnSubmit(form)" novalidate class="form-inline">
+
+    <div class="form-group" >
+
+        <div [class.has-error]="fnameTmpl.invalid" [class.has-warning]="fnameTmpl.dirty" >
+        <label class="control-label" for="fname" > First Name </label>
+        <input type="text" #fnameTmpl="ngModel" required   pattern="[a-z A-Z]*" name ="fname" [ngModel] = "employeeModel.fname" > <br> <br>
+
+            <div   *ngIf ="fnameTmpl.invalid"  class="alert alert-danger"  >
+                 Please Enter First Name.<br>
+                 First Name must be Alphabet. Special characters not allowed.</div>
+
+
+                <label> entered text is {{ employeeModel.fname }} </label>  <br><br>
+
+                <p> using ngModel properties by assigning ngModel to template reference variable </p>
+                <p> is this field touched? : {{ fnameTmpl.touched }} </p>
+                <p> is this field untouched? : {{ fnameTmpl.untouched }} </p>
+                <p> is this field not modified i.e., retains initial value? : {{ fnameTmpl.pristine }} </p>
+                <p> is this field modified i.e., dirty? : {{ fnameTmpl.dirty }} </p>
+                <p> is this field valid i.e., mandatory? : {{ fnameTmpl.valid }} </p>
+                <br>
+
+
+        </div>
+ 
+
+        <label for="lname" > Last Name </label>
+        <input type="text"  class="form-control" required  #lnameTmpl name="lname" [(ngModel)]="employeeModel.lname" 
+                 (change)="fnGetName(employeeModel.lname , employeeModel) "> <br>
+        <label> entered text is {{ employeeModel.lname }} </label>  
+
+<br><br>
+Classes : {{ lnameTmpl.className}}
+<br><br>
+
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" required name="employeeType" [(ngModel)]="employeeModel.employeeType" checked > Full Time Employee
+            </label>
+        </div>
+<br><br>
+
+<label> Payment Type * </label> 
+
+<br>
+        <div class="radio" >
+            <label>
+                <input type="radio"  #paymentTypeTmpl="ngModel"
+                  name="paymentType" [(ngModel)]="employeeModel.paymentType" value="W2" checked> W2 
+            </label>
+
+<br>
+            <label>
+                <input type="radio" #paymentTypeTmpl="ngModel" 
+                 name="paymentType" [(ngModel)]="employeeModel.paymentType" value="1099" > 1099 
+            </label>
+
+
+            <div class="alert alert-danger"  *ngIf ="paymentTypeTmpl.invalid" >
+                        Please chose Payment Type
+            </div>
+        </div>
+
+<br><br>
+
+<div  [class.has-error]="isValidLang">
+    
+    <label class="control-label" for="primaryLang"> Primary Language </label> 
+
+    <!-- to pass te form field value to component either use model.value or create template reference variable and use template.value -->
+    
+    <select name="primaryLang" required  #primaryLang class="form-control" [(ngModel)]="employeeModel.primaryLang" 
+    (change)="fnValidateLang(primaryLang.value)" >
+    
+        <option  value="default" selected> Select a Language </option>
+        <option *ngFor="let lang of languages" > {{ lang }}  </option>
+
+    </select>
+</div>
+
+<br><br>
+
+ <div  >
+        <label for="doj" > Date </label>
+        <input type="date"  required class="form-control" name ="doj" [(ngModel)]="employeeModel.doj"  >         
+ </div>
+
+<br><br>
+        <input type="submit" value="Submit" class="btn btn-primary" [disabled]="form.invalid">
+
+<br>
+
+Form : {{ form.value | json}}
+<br>
+Angular {{ Angular | json}}
+    </div>
+</form>
+
+</div>
+
+
