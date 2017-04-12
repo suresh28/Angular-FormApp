@@ -45,7 +45,7 @@ export class AppComponent  {
 
    fnSubmit(form:FormsModule)
    {
-     console.log( form.Value );
+    // console.log( form.Value );
      console.log( this.employeeModel);
      console.log( this.employeeModel.fname);
    }
